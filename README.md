@@ -1,2 +1,1 @@
-# hikeapp-be
-Hikeapp
+# Hike App
