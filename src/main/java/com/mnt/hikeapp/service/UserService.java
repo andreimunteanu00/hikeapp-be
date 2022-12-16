@@ -11,13 +11,13 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User createFirstTimeLogInUser(Long googleId) {
+    public User createFirstTimeLogInUser(String googleId) {
         User user = new User();
         user.setGoogleId(googleId);
         return userRepository.save(user);
     }
 
-    public boolean checkUserExists(Long googleId) {
+    public boolean checkUserExists(String googleId) {
         return userRepository.findByGoogleId(googleId).isPresent();
     }
 }

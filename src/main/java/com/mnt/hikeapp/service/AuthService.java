@@ -11,7 +11,7 @@ public class AuthService {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final UserService userService;
-    public String generateToken(Long googleId) {
+    public String generateToken(String googleId) {
         if (!userService.checkUserExists(googleId)) {
             User user = userService.createFirstTimeLogInUser(googleId);
             if (user == null) throw new Error("fail create new user!");

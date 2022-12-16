@@ -16,7 +16,7 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping("{googleId}")
-    public ResponseEntity<String> generateToken(@PathVariable Long googleId) {
+    public ResponseEntity<String> generateToken(@PathVariable String googleId) {
         return ResponseEntity.ok(authService.generateToken(googleId));
     }
 }

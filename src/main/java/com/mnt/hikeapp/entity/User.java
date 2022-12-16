@@ -19,7 +19,7 @@ public class User implements Serializable {
     private Long id;
 
     @Column(name = "GOOGLE_ID", nullable = false)
-    private Long googleId;
+    private String googleId;
 
     @Column(name = "USERNAME")
     private String username;

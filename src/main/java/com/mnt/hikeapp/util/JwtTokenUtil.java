@@ -18,8 +18,8 @@ public class JwtTokenUtil implements Serializable {
     @Value("${jwt.secret}")
     private String secret;
 
-    public Long getGoogleIdForToken(String token) {
-        return Long.parseLong(getClaimFromToken(token, Claims::getSubject));
+    public String getGoogleIdForToken(String token) {
+        return getClaimFromToken(token, Claims::getSubject);
     }
 
     public Boolean isTokenExpired(String token) {
@@ -27,9 +27,9 @@ public class JwtTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
 
-    public String generateToken(Long googleId) {
+    public String generateToken(String googleId) {
         return Jwts.builder()
-                .setSubject(googleId.toString())
+                .setSubject(googleId)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 10000000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
