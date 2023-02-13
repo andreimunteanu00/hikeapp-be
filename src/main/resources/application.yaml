@@ -10,7 +10,7 @@ spring:
   jpa:
     show-sql: ${JPA_SHOW_SQL}
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
   liquibase:
     change-log: db.migration/changelog.xml
     enabled: ${LIQUIBASE_ENABLED}
