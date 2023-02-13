@@ -8,4 +8,6 @@ public interface UserService {
     boolean checkUserExists(String googleId);
     User findByGoogleId(String googleId);
 
+    User save(User user);
+
 }

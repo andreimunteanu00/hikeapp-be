@@ -26,4 +26,9 @@ public class UserServiceImpl implements UserService {
     public User findByGoogleId(String googleId) {
         return userRepository.findByGoogleId(googleId).orElse(null);
     }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }
