@@ -21,10 +21,16 @@ public class User implements Serializable {
     @Column(name = "FIRST_LOGIN")
     private boolean isFirstLogin;
 
-    @Column(name = "GOOGLE_ID", nullable = false)
+    @Column(name = "GOOGLE_ID", nullable = false, unique = true)
     private String googleId;
 
     @Column(name = "USERNAME")
     private String username;
+
+    @Column(name = "EMAIL", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "PHONE_NUMBER", nullable = false, unique = true)
+    private String phoneNumber;
 
 }

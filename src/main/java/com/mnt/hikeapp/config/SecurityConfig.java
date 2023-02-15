@@ -27,9 +27,9 @@ public class SecurityConfig {
         return http
                 // TODO enable csrf
                 // TODO read about csrf and cors for mobile + stateless session
-                .csrf().and().cors().and()
+                .csrf().disable().cors().disable()
                 .authorizeRequests()
-                .antMatchers("/api/auth/{googleId}").permitAll()
+                .antMatchers("/api/auth/{googleId}/{email}").permitAll()
                 .antMatchers("/**").authenticated()
                 .and().addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

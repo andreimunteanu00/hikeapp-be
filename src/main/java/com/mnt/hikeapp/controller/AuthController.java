@@ -4,10 +4,7 @@ import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -16,9 +13,9 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @GetMapping("{googleId}")
-    public ResponseEntity<String> generateToken(@PathVariable String googleId) {
-        return ResponseEntity.ok(authService.generateToken(googleId));
+    @PostMapping("{googleId}/{email}")
+    public ResponseEntity<String> generateToken(@PathVariable String googleId, @PathVariable String email) {
+        return ResponseEntity.ok(authService.generateToken(googleId, email));
     }
 
     @GetMapping("currentUser")

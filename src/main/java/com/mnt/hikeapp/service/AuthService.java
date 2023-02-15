@@ -4,7 +4,7 @@ import com.mnt.hikeapp.entity.User;
 
 public interface AuthService {
 
-    String generateToken(String googleId);
+    String generateToken(String googleId, String email);
 
     User getCurrentUser();
 }
