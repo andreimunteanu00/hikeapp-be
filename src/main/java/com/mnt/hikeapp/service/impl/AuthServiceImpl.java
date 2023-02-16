@@ -14,7 +14,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final UserService userService;
-    public String generateToken(String googleId, String email) {
+    public String generateToken(String googleId, String email) throws Exception {
         if (!userService.checkUserExists(googleId)) {
             User user = userService.createFirstTimeLogInUser(googleId, email);
             if (user == null) throw new Error("fail create new user!");
