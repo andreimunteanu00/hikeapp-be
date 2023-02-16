@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @RestController
 @RequestMapping("/api/user")
 @AllArgsConstructor
@@ -14,7 +17,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("{googleId}")
-    private ResponseEntity<User> findUserByGoogleId(@PathVariable String googleId) {
+    private ResponseEntity<User> findUserByGoogleId(@PathVariable String googleId) throws SQLException, IOException {
         return ResponseEntity.ok(userService.findByGoogleId(googleId));
     }
 

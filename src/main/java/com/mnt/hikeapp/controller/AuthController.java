@@ -14,7 +14,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("{googleId}/{email}")
-    public ResponseEntity<String> generateToken(@PathVariable String googleId, @PathVariable String email) {
+    public ResponseEntity<String> generateToken(@PathVariable String googleId, @PathVariable String email) throws Exception {
         return ResponseEntity.ok(authService.generateToken(googleId, email));
     }
 
