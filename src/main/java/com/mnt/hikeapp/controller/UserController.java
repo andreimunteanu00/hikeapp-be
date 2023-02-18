@@ -21,6 +21,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findByGoogleId(googleId));
     }
 
+    @GetMapping("checkFieldDuplicate/{columnName}/{username}")
+    private ResponseEntity<Boolean> checkFieldDuplicate(@PathVariable String columnName, @PathVariable String username) {
+        return ResponseEntity.ok(userService.checkFieldDuplicate(columnName, username));
+    }
+
     @PostMapping("save")
     private ResponseEntity<User> updateUser(@RequestBody User user) {
         user = userService.save(user);

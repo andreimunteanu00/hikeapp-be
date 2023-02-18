@@ -38,16 +38,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User findByGoogleId(String googleId) throws SQLException, IOException {
-        /*if (user != null && user.getProfilePicture() != null) {
-            user.setProfilePictureString(Util.convertClobToString(user.getProfilePicture()));
-        }*/
         return userRepository.findByGoogleId(googleId).orElse(null);
     }
 
     @Override
     @Transactional
     public User save(User user) {
-        //user.setProfilePicture(Util.convertStringToClob(user.getProfilePictureString()));
+        if (!Util.getCurrentUser().getGoogleId().equals(user.getGoogleId())) {
+            throw new Error("you can't save another user data!");
+        }
         return userRepository.save(user);
+    }
+
+    @Override
+    public Boolean checkFieldDuplicate(String columnName, String value) {
+        return userRepository.checkFieldDuplicate(columnName, value) != 0 ? Boolean.TRUE : Boolean.FALSE;
     }
 }

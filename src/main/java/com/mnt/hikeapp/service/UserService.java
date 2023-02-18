@@ -11,4 +11,5 @@ public interface UserService {
     boolean checkUserExists(String googleId);
     User findByGoogleId(String googleId) throws SQLException, IOException;
     User save(User user);
+    Boolean checkFieldDuplicate(String field, String value);
 }

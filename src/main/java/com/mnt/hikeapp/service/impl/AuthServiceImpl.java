@@ -4,8 +4,8 @@ import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.service.AuthService;
 import com.mnt.hikeapp.service.UserService;
 import com.mnt.hikeapp.util.JwtTokenUtil;
+import com.mnt.hikeapp.util.Util;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +24,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User getCurrentUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return Util.getCurrentUser();
     }
 }
