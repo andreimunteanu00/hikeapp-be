@@ -1,5 +1,6 @@
 package com.mnt.hikeapp.service.impl;
 
+import com.mnt.hikeapp.dto.UserSetupDTO;
 import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.repository.UserRepository;
 import com.mnt.hikeapp.service.UserService;
@@ -20,11 +21,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public User createFirstTimeLogInUser(String googleId, String email) throws Exception {
         User user = new User();
         user.setGoogleId(googleId);
         user.setEmail(email);
         user.setFirstLogin(true);
+        user.setBlocked(false);
         user.setProfilePicture(Util.fileToBase64(Path.of(Constants.PATH_DEFAULT_AVATAR)));
         return userRepository.save(user);
     }
@@ -43,11 +46,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User update(User user) throws Exception {
-        if (!Util.checkSameUser(user.getGoogleId())) {
+    public User update(UserSetupDTO userSetupDTO) throws Exception {
+        if (!Util.checkSameUser(userSetupDTO.getGoogleId())) {
             throw new UserNotFoundException(Messages.NOT_SAME_USER_UPDATE);
         }
-        return userRepository.save(user);
+        User userDb = userRepository.findByGoogleId(userSetupDTO.getGoogleId()).orElse(null);
+        if (userDb == null) {
+            throw new UserNotFoundException(Messages.USER_NOT_FOUND);
+        }
+        userDb.setFirstLogin(userSetupDTO.isFirstLogin());
+        userDb.setUsername(userSetupDTO.getUsername());
+        userDb.setProfilePicture(userSetupDTO.getProfilePicture());
+        return userRepository.save(userDb);
     }
 
     @Override

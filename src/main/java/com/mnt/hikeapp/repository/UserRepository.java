@@ -16,7 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "              WHERE :value in (SELECT CASE :columnName " +
             "                                WHEN 'email' THEN u.email " +
             "                                WHEN 'username' THEN u.username " +
-            "                                WHEN 'phone_number' THEN u.phone_number " +
             "                                ELSE null END " +
             "                     FROM User u))")
     Integer checkFieldDuplicate(@Param("columnName") String columnName, @Param("value") String value);
