@@ -27,8 +27,8 @@ public class UserController {
     }
 
     @PostMapping("save")
-    private ResponseEntity<User> updateUser(@RequestBody User user) {
-        user = userService.save(user);
+    private ResponseEntity<User> update(@RequestBody User user) throws Exception {
+        user = userService.update(user);
         return ResponseEntity.ok(user);
     }
 }

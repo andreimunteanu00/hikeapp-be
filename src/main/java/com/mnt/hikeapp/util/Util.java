@@ -17,4 +17,8 @@ public class Util {
     public static User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+
+    public static boolean checkSameUser(String googleId) {
+        return getCurrentUser().getGoogleId().equals(googleId);
+    }
 }
