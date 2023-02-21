@@ -22,8 +22,8 @@ public class User implements Serializable {
     @Column(name = "FIRST_LOGIN")
     private boolean isFirstLogin;
 
-    @Column(name = "BLOCKED")
-    private boolean isBlocked;
+    @Column(name = "ACTIVE")
+    private boolean isActive;
 
     @Column(name = "GOOGLE_ID", nullable = false, unique = true)
     private String googleId;

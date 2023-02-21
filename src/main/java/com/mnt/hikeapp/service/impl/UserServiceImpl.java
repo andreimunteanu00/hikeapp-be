@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
         user.setGoogleId(googleId);
         user.setEmail(email);
         user.setFirstLogin(true);
-        user.setBlocked(false);
+        user.setActive(true);
         user.setProfilePicture(Util.fileToBase64(Path.of(Constants.PATH_DEFAULT_AVATAR)));
         return userRepository.save(user);
     }
