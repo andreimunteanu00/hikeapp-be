@@ -1,11 +1,10 @@
 package com.mnt.hikeapp.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
+import com.mnt.hikeapp.entity.User;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Clob;
-import java.sql.SQLException;
 import java.util.Base64;
 
 public class Util {
@@ -15,4 +14,11 @@ public class Util {
         return Base64.getEncoder().encodeToString(fileBytes);
     }
 
+    public static User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    public static boolean checkSameUser(String googleId) {
+        return getCurrentUser().getGoogleId().equals(googleId);
+    }
 }

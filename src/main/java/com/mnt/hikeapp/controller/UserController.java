@@ -1,5 +1,6 @@
 package com.mnt.hikeapp.controller;
 
+import com.mnt.hikeapp.dto.UserSetupDTO;
 import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.service.UserService;
 import lombok.AllArgsConstructor;
@@ -21,9 +22,14 @@ public class UserController {
         return ResponseEntity.ok(userService.findByGoogleId(googleId));
     }
 
-    @PostMapping("save")
-    private ResponseEntity<User> updateUser(@RequestBody User user) {
-        user = userService.save(user);
+    @GetMapping("checkFieldDuplicate/{columnName}/{username}")
+    private ResponseEntity<Boolean> checkFieldDuplicate(@PathVariable String columnName, @PathVariable String username) {
+        return ResponseEntity.ok(userService.checkFieldDuplicate(columnName, username));
+    }
+
+    @PutMapping("update")
+    private ResponseEntity<User> update(@RequestBody UserSetupDTO userSetupDTO) throws Exception {
+        User user = userService.update(userSetupDTO);
         return ResponseEntity.ok(user);
     }
 }

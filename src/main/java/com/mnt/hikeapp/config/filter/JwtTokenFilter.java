@@ -2,7 +2,10 @@ package com.mnt.hikeapp.config.filter;
 
 import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.repository.UserRepository;
+import com.mnt.hikeapp.util.Constants;
 import com.mnt.hikeapp.util.JwtTokenUtil;
+import com.mnt.hikeapp.util.Messages;
+import com.mnt.hikeapp.util.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpHeaders;
@@ -33,12 +36,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return;
         }
         final String token = header.split(" ")[1].trim();
-        if (Strings.isEmpty(token)) throw new Error("token not found!");
+        if (Strings.isEmpty(token)) throw new Error(Messages.TOKEN_NOT_FOUND);
         User user = userRepository
                 .findByGoogleId(jwtTokenUtil.getGoogleIdForToken(token)).orElse(null);
-        if (user == null) {
-            throw new Error("username not found!");
-        }
+        if (user == null) throw new Error(Messages.USERNAME_NOT_FOUND);
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(user, null,null);
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
