@@ -19,9 +19,9 @@ public class HikeController {
 
     private final HikeService hikeService;
 
-    @PostMapping("rate/{hikeId}")
-    private ResponseEntity<Void> rateHike(@PathVariable  Long hikeId, @RequestBody RatingByUserDTO ratingByUser) throws UserNotFoundException, HikeNotFoundException {
-        hikeService.rateHike(hikeId, ratingByUser);
+    @PostMapping("rate/{hikeTitle}")
+    private ResponseEntity<Void> rateHike(@PathVariable  String hikeTitle, @RequestBody RatingByUserDTO ratingByUser) throws UserNotFoundException, HikeNotFoundException {
+        hikeService.rateHike(hikeTitle, ratingByUser);
         return ResponseEntity.noContent().build();
     }
 

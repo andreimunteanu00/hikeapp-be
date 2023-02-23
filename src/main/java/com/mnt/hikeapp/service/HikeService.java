@@ -9,6 +9,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface HikeService {
 
-    void rateHike(Long hikeId, RatingByUserDTO rartingByUser) throws HikeNotFoundException, UserNotFoundException;
+    void rateHike(String hikeTitle, RatingByUserDTO rartingByUser) throws HikeNotFoundException, UserNotFoundException;
     Page<HikeShowDTO> getHikeShowList(String title, String sort, Pageable page);
 }

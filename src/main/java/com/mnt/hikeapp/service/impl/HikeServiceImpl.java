@@ -30,12 +30,12 @@ public class HikeServiceImpl implements HikeService {
 
     @Override
     @Transactional
-    public void rateHike(Long hikeId, RatingByUserDTO ratingByUser) throws HikeNotFoundException, UserNotFoundException {
-        Hike hike = hikeRepository.findById(hikeId).orElse(null);
-        if (hike == null) throw new HikeNotFoundException("Hike with id %s not found!", hikeId);
+    public void rateHike(String hikeTitle, RatingByUserDTO ratingByUser) throws HikeNotFoundException, UserNotFoundException {
+        Hike hike = hikeRepository.findByTitle(hikeTitle).orElse(null);
+        if (hike == null) throw new HikeNotFoundException("Hike with title %s not found!", hikeTitle);
         User user = Util.getCurrentUser();
         if (user == null) throw new UserNotFoundException(Messages.USER_NOT_FOUND);
-        Rating rating = ratingRepository.findByUserIdAndHikeId(user.getId(), hikeId).orElse(null);
+        Rating rating = ratingRepository.findByUserIdAndHikeId(user.getId(), hike.getId()).orElse(null);
         rating = calculateRating(ratingByUser, hike, user, rating);
         ratingRepository.save(rating);
     }

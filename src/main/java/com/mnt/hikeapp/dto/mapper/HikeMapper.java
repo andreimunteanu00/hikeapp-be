@@ -14,7 +14,6 @@ public class HikeMapper {
 
     public HikeShowDTO toHikeShowDTO(Hike hike) {
         return new HikeShowDTO(
-                hike.getId(),
                 hike.getTitle(),
                 hike.getDescription(),
                 hike.getAllRatings(),

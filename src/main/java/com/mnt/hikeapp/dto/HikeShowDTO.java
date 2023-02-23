@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HikeShowDTO {
 
-    private Long id;
     private String title;
     private String description;
     private Double allRatings;
