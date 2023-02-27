@@ -1,5 +1,6 @@
 package com.mnt.hikeapp.entity;
 
+import com.mnt.hikeapp.util.enums.Difficulty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,5 +30,9 @@ public class Hike implements Serializable {
 
     @Column(name ="NUMBER_RATINGS")
     private Long numberRatings;
+
+    @Column(name = "DIFFICULTY")
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
 
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -31,4 +32,7 @@ public class Rating implements Serializable {
 
     @Column(name = "COMMENT")
     private String comment;
+
+    @Column(name = "DATE_TIME_RATE")
+    private LocalDateTime dateTimeRate;
 }
