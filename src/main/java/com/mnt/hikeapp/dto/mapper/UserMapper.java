@@ -1,6 +1,6 @@
 package com.mnt.hikeapp.dto.mapper;
 
-import com.mnt.hikeapp.dto.UserShowDTO;
+import com.mnt.hikeapp.dto.user.UserShowDTO;
 import com.mnt.hikeapp.entity.User;
 import org.springframework.stereotype.Component;
 

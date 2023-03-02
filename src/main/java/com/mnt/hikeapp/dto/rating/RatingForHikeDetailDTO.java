@@ -1,5 +1,6 @@
-package com.mnt.hikeapp.dto;
+package com.mnt.hikeapp.dto.rating;
 
+import com.mnt.hikeapp.dto.user.UserShowDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,7 +10,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class RatingForHikeDetailDTO {
 
-    private HikeShowDTO hike;
     private UserShowDTO user;
     private String comment;
     private LocalDateTime dateTimeRate;

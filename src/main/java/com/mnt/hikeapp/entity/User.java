@@ -34,9 +34,8 @@ public class User implements Serializable {
     @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
-    @Lob
-    @Column(name = "PROFILE_PICTURE")
-    private String profilePicture;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Picture profilePicture;
 
     @CreationTimestamp
     @Column(name = "CREATE_DATE_TIME")

@@ -1,5 +1,6 @@
-package com.mnt.hikeapp.dto;
+package com.mnt.hikeapp.dto.user;
 
+import com.mnt.hikeapp.entity.Picture;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,6 @@ public class UserSetupDTO {
     private String googleId;
     private String username;
     private String email;
-    private String profilePicture;
+    private Picture profilePicture;
 
 }

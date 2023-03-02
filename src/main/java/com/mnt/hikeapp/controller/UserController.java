@@ -1,6 +1,6 @@
 package com.mnt.hikeapp.controller;
 
-import com.mnt.hikeapp.dto.UserSetupDTO;
+import com.mnt.hikeapp.dto.user.UserSetupDTO;
 import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.service.UserService;
 import lombok.AllArgsConstructor;

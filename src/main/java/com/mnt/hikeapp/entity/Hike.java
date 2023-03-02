@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -30,6 +31,12 @@ public class Hike implements Serializable {
 
     @Column(name ="NUMBER_RATINGS")
     private Long numberRatings;
+
+    @OneToOne
+    private Picture mainPicture;
+
+    @OneToMany
+    private List<Picture> pictureList;
 
     @Column(name = "DIFFICULTY")
     @Enumerated(EnumType.STRING)

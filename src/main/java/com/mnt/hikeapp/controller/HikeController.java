@@ -1,7 +1,8 @@
 package com.mnt.hikeapp.controller;
 
-import com.mnt.hikeapp.dto.HikeShowDTO;
-import com.mnt.hikeapp.dto.RatingByUserDTO;
+import com.mnt.hikeapp.dto.hike.HikeDetailScreenDTO;
+import com.mnt.hikeapp.dto.hike.HikeShowDTO;
+import com.mnt.hikeapp.dto.rating.RatingByUserDTO;
 import com.mnt.hikeapp.service.HikeService;
 import com.mnt.hikeapp.util.exception.HikeNotFoundException;
 import com.mnt.hikeapp.util.exception.UserNotFoundException;
@@ -33,5 +34,10 @@ public class HikeController {
                                                               @RequestParam(name = "sortField", defaultValue = "title") String sortField) {
         return ResponseEntity.ok(hikeService.getHikeShowList(title, sortField,
                 PageRequest.of(page, size, typeSort.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending())));
+    }
+
+    @GetMapping("{hikeTitle}")
+    private ResponseEntity<HikeDetailScreenDTO> getHikeShowList(@PathVariable String hikeTitle) {
+        return ResponseEntity.ok(hikeService.getHikeDetailScreenByTitle(hikeTitle));
     }
 }

@@ -1,6 +1,6 @@
 package com.mnt.hikeapp.service;
 
-import com.mnt.hikeapp.dto.UserSetupDTO;
+import com.mnt.hikeapp.dto.user.UserSetupDTO;
 import com.mnt.hikeapp.entity.User;
 
 import java.io.IOException;

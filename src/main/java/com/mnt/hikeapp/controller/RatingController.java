@@ -1,6 +1,6 @@
 package com.mnt.hikeapp.controller;
 
-import com.mnt.hikeapp.dto.RatingForHikeDetailDTO;
+import com.mnt.hikeapp.dto.rating.RatingForHikeDetailDTO;
 import com.mnt.hikeapp.service.RatingService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

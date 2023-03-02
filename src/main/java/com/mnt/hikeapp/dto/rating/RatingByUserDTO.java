@@ -1,4 +1,4 @@
-package com.mnt.hikeapp.dto;
+package com.mnt.hikeapp.dto.rating;
 
 import lombok.Data;
 

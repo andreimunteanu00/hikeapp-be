@@ -1,6 +1,6 @@
 package com.mnt.hikeapp.service;
 
-import com.mnt.hikeapp.dto.RatingForHikeDetailDTO;
+import com.mnt.hikeapp.dto.rating.RatingForHikeDetailDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

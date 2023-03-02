@@ -1,6 +1,6 @@
 package com.mnt.hikeapp.service.impl;
 
-import com.mnt.hikeapp.dto.RatingForHikeDetailDTO;
+import com.mnt.hikeapp.dto.rating.RatingForHikeDetailDTO;
 import com.mnt.hikeapp.dto.mapper.RatingMapper;
 import com.mnt.hikeapp.repository.RatingRepository;
 import com.mnt.hikeapp.service.RatingService;

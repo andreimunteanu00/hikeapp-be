@@ -1,8 +1,7 @@
 package com.mnt.hikeapp.dto.mapper;
 
-import com.mnt.hikeapp.dto.HikeShowDTO;
-import com.mnt.hikeapp.dto.RatingForHikeDetailDTO;
-import com.mnt.hikeapp.dto.UserShowDTO;
+import com.mnt.hikeapp.dto.rating.RatingForHikeDetailDTO;
+import com.mnt.hikeapp.dto.user.UserShowDTO;
 import com.mnt.hikeapp.entity.Rating;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,13 +16,10 @@ import java.util.stream.Collectors;
 public class RatingMapper {
 
     private UserMapper userMapper;
-    private HikeMapper hikeMapper;
 
     public RatingForHikeDetailDTO toRatingForHikeDetailDTO(Rating rating) {
-        HikeShowDTO hikeShowDTO = hikeMapper.toHikeShowDTO(rating.getHike());
         UserShowDTO userShowDTO = userMapper.toUserShowDTO(rating.getUser());
         return new RatingForHikeDetailDTO(
-                hikeShowDTO,
                 userShowDTO,
                 rating.getComment(),
                 rating.getDateTimeRate(),

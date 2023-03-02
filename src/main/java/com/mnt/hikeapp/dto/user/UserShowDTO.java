@@ -1,5 +1,6 @@
-package com.mnt.hikeapp.dto;
+package com.mnt.hikeapp.dto.user;
 
+import com.mnt.hikeapp.entity.Picture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,6 +9,6 @@ import lombok.Data;
 public class UserShowDTO {
 
     private String username;
-    private String profilePic;
+    private Picture profilePicture;
 
 }

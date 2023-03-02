@@ -1,6 +1,7 @@
 package com.mnt.hikeapp.dto.mapper;
 
-import com.mnt.hikeapp.dto.HikeShowDTO;
+import com.mnt.hikeapp.dto.hike.HikeDetailScreenDTO;
+import com.mnt.hikeapp.dto.hike.HikeShowDTO;
 import com.mnt.hikeapp.entity.Hike;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,12 +18,24 @@ public class HikeMapper {
                 hike.getTitle(),
                 hike.getDescription(),
                 hike.getAllRatings(),
-                hike.getNumberRatings()
+                hike.getNumberRatings(),
+                hike.getMainPicture()
         );
     }
 
     public Page<HikeShowDTO> toHikeShowListPageDTO(Page<Hike> hikeList) {
         List<HikeShowDTO> aux = hikeList.stream().map(this::toHikeShowDTO).collect(Collectors.toList());
         return new PageImpl<>(aux);
+    }
+
+    public HikeDetailScreenDTO toHikeDetailScreenDTO(Hike hike) {
+        return new HikeDetailScreenDTO(
+                hike.getTitle(),
+                hike.getDescription(),
+                hike.getAllRatings(),
+                hike.getNumberRatings(),
+                hike.getPictureList(),
+                hike.getDifficulty()
+        );
     }
 }
