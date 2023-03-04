@@ -10,6 +10,7 @@ public class UserMapper {
     public UserShowDTO toUserShowDTO(User user) {
         return new UserShowDTO(
                 user.getUsername(),
+                user.getGoogleId(),
                 user.getProfilePicture()
         );
     }

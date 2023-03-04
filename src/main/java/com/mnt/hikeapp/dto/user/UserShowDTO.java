@@ -9,6 +9,7 @@ import lombok.Data;
 public class UserShowDTO {
 
     private String username;
+    private String googleId;
     private Picture profilePicture;
 
 }
