@@ -16,10 +16,10 @@ public class HikeMapper {
     public HikeShowDTO toHikeShowDTO(Hike hike) {
         return new HikeShowDTO(
                 hike.getTitle(),
-                hike.getDescription(),
                 hike.getAllRatings(),
                 hike.getNumberRatings(),
-                hike.getMainPicture()
+                hike.getMainPicture(),
+                hike.getDifficulty()
         );
     }
 
