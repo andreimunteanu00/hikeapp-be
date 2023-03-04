@@ -16,7 +16,7 @@ public class HikeDetailScreenDTO {
     private String title;
     private String description;
     private Double allRatings;
-    private Long nunmberRatings;
+    private Long numberRatings;
     private List<Picture> pictureList;
     private Difficulty difficulty;
 
