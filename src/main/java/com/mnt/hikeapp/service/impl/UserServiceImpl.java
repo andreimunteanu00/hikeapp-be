@@ -1,6 +1,7 @@
 package com.mnt.hikeapp.service.impl;
 
-import com.mnt.hikeapp.dto.UserSetupDTO;
+import com.mnt.hikeapp.dto.user.UserSetupDTO;
+import com.mnt.hikeapp.entity.Picture;
 import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.repository.UserRepository;
 import com.mnt.hikeapp.service.UserService;
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         user.setFirstLogin(true);
         user.setActive(true);
-        user.setProfilePicture(Util.fileToBase64(Path.of(Constants.PATH_DEFAULT_AVATAR)));
+        user.setProfilePicture(new Picture(Util.fileToBase64(Path.of(Constants.PATH_DEFAULT_AVATAR))));
         return userRepository.save(user);
     }
 
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
         }
         userDb.setFirstLogin(userSetupDTO.isFirstLogin());
         userDb.setUsername(userSetupDTO.getUsername());
-        userDb.setProfilePicture(userSetupDTO.getProfilePicture());
+        userDb.setProfilePicture(userDb.getProfilePicture());
         return userRepository.save(userDb);
     }
 

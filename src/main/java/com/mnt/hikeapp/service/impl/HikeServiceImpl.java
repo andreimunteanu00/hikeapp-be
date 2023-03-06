@@ -1,7 +1,8 @@
 package com.mnt.hikeapp.service.impl;
 
-import com.mnt.hikeapp.dto.HikeShowDTO;
-import com.mnt.hikeapp.dto.RatingByUserDTO;
+import com.mnt.hikeapp.dto.hike.HikeDetailScreenDTO;
+import com.mnt.hikeapp.dto.hike.HikeShowDTO;
+import com.mnt.hikeapp.dto.rating.RatingByUserDTO;
 import com.mnt.hikeapp.dto.mapper.HikeMapper;
 import com.mnt.hikeapp.entity.Hike;
 import com.mnt.hikeapp.entity.Rating;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -60,6 +62,11 @@ public class HikeServiceImpl implements HikeService {
             }
         }
         return hikeShowListDTOPage;
+    }
+
+    @Override
+    public HikeDetailScreenDTO getHikeDetailScreenByTitle(String hikeTitle) {
+        return hikeMapper.toHikeDetailScreenDTO(Objects.requireNonNull(hikeRepository.findByTitle(hikeTitle).orElse(null)));
     }
 
     private Rating calculateRating(RatingByUserDTO ratingByUser, Hike hike, User user, Rating rating) {

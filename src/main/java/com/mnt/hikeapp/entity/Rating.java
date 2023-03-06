@@ -3,9 +3,11 @@ package com.mnt.hikeapp.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -31,4 +33,8 @@ public class Rating implements Serializable {
 
     @Column(name = "COMMENT")
     private String comment;
+
+    @Column(name = "DATE_TIME_RATE")
+    @UpdateTimestamp
+    private LocalDateTime dateTimeRate;
 }
