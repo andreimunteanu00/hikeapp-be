@@ -2,10 +2,7 @@ package com.mnt.hikeapp.controller;
 
 import com.mnt.hikeapp.dto.hike.HikeDetailScreenDTO;
 import com.mnt.hikeapp.dto.hike.HikeShowDTO;
-import com.mnt.hikeapp.dto.rating.RatingByUserDTO;
 import com.mnt.hikeapp.service.HikeService;
-import com.mnt.hikeapp.util.exception.HikeNotFoundException;
-import com.mnt.hikeapp.util.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,12 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class HikeController {
 
     private final HikeService hikeService;
-
-    @PostMapping("rate/{hikeTitle}")
-    private ResponseEntity<Void> rateHike(@PathVariable String hikeTitle, @RequestBody RatingByUserDTO ratingByUser) throws UserNotFoundException, HikeNotFoundException {
-        hikeService.rateHike(hikeTitle, ratingByUser);
-        return ResponseEntity.noContent().build();
-    }
 
     @GetMapping("")
     private ResponseEntity<Page<HikeShowDTO>> getHikeShowList(@RequestParam(name = "title", defaultValue = "") String title,

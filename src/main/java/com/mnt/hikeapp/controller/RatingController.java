@@ -1,8 +1,10 @@
 package com.mnt.hikeapp.controller;
 
+import com.mnt.hikeapp.dto.rating.RatingByUserDTO;
 import com.mnt.hikeapp.dto.rating.RatingForHikeDetailDTO;
 import com.mnt.hikeapp.service.RatingService;
 import com.mnt.hikeapp.util.exception.HikeNotFoundException;
+import com.mnt.hikeapp.util.exception.RatingNotFoundException;
 import com.mnt.hikeapp.util.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,5 +31,17 @@ public class RatingController {
     @GetMapping("byCurrentUser/{hikeTitle}")
     private ResponseEntity<RatingForHikeDetailDTO> getByCurrentUser(@PathVariable String hikeTitle) throws UserNotFoundException, HikeNotFoundException {
         return ResponseEntity.ok(ratingService.getRatingByCurrentUser(hikeTitle));
+    }
+
+    @PostMapping("rate/{hikeTitle}")
+    private ResponseEntity<Void> rateHike(@PathVariable String hikeTitle, @RequestBody RatingByUserDTO ratingByUser) throws UserNotFoundException, HikeNotFoundException {
+        ratingService.rateHike(hikeTitle, ratingByUser);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("unrate/{hikeTitle}")
+    private ResponseEntity<Void> unrateHike(@PathVariable String hikeTitle) throws UserNotFoundException, HikeNotFoundException, RatingNotFoundException {
+        ratingService.unrateHike(hikeTitle);
+        return ResponseEntity.noContent().build();
     }
 }

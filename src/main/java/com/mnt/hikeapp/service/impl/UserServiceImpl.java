@@ -48,9 +48,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User update(UserSetupDTO userSetupDTO) throws Exception {
-        if (!Util.checkSameUser(userSetupDTO.getGoogleId())) {
-            throw new UserNotFoundException(Messages.NOT_SAME_USER_UPDATE);
-        }
         User userDb = userRepository.findByGoogleId(userSetupDTO.getGoogleId()).orElse(null);
         if (userDb == null) {
             throw new UserNotFoundException(Messages.USER_NOT_FOUND);
