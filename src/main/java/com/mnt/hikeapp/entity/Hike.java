@@ -42,4 +42,10 @@ public class Hike implements Serializable {
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
+    @OneToOne
+    private LatLng startPoint;
+
+    @OneToOne
+    private LatLng endPoint;
+
 }

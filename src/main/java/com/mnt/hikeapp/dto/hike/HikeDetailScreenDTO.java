@@ -1,5 +1,6 @@
 package com.mnt.hikeapp.dto.hike;
 
+import com.mnt.hikeapp.dto.latlng.LatLngDTO;
 import com.mnt.hikeapp.entity.Picture;
 import com.mnt.hikeapp.util.enums.Difficulty;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,8 @@ public class HikeDetailScreenDTO {
     private Long numberRatings;
     private List<Picture> pictureList;
     private Difficulty difficulty;
+    private LatLngDTO startPoint;
+    private LatLngDTO endPoint;
 
 
 

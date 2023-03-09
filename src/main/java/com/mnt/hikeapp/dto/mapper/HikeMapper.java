@@ -3,6 +3,7 @@ package com.mnt.hikeapp.dto.mapper;
 import com.mnt.hikeapp.dto.hike.HikeDetailScreenDTO;
 import com.mnt.hikeapp.dto.hike.HikeShowDTO;
 import com.mnt.hikeapp.entity.Hike;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class HikeMapper {
+
+    private final LatLngMapper latLngMapper;
 
     public HikeShowDTO toHikeShowDTO(Hike hike) {
         return new HikeShowDTO(
@@ -35,7 +39,9 @@ public class HikeMapper {
                 hike.getAllRatings(),
                 hike.getNumberRatings(),
                 hike.getPictureList(),
-                hike.getDifficulty()
+                hike.getDifficulty(),
+                latLngMapper.toLatLngDTO(hike.getStartPoint()),
+                latLngMapper.toLatLngDTO(hike.getEndPoint())
         );
     }
 }

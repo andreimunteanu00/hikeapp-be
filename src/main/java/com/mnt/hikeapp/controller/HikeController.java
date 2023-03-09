@@ -28,7 +28,7 @@ public class HikeController {
     }
 
     @GetMapping("{hikeTitle}")
-    private ResponseEntity<HikeDetailScreenDTO> getHikeShowList(@PathVariable String hikeTitle) {
+    private ResponseEntity<HikeDetailScreenDTO> getHikeDetailScreen(@PathVariable String hikeTitle) {
         return ResponseEntity.ok(hikeService.getHikeDetailScreenByTitle(hikeTitle));
     }
 }
