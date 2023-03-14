@@ -34,7 +34,10 @@ public class User implements Serializable {
     @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @Column(name = "HIKE_POINTS")
+    private Double hikePoints;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Picture profilePicture;
 
     @CreationTimestamp

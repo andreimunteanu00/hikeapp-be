@@ -8,6 +8,7 @@ import com.mnt.hikeapp.entity.Rating;
 import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.repository.HikeRepository;
 import com.mnt.hikeapp.repository.RatingRepository;
+import com.mnt.hikeapp.repository.UserRepository;
 import com.mnt.hikeapp.service.RatingService;
 import com.mnt.hikeapp.util.Messages;
 import com.mnt.hikeapp.util.Util;
@@ -26,6 +27,7 @@ import javax.transaction.Transactional;
 public class RatingServiceImpl implements RatingService {
 
     private HikeRepository hikeRepository;
+    private UserRepository userRepository;
     private RatingRepository ratingRepository;
     private RatingMapper ratingMapper;
 
@@ -34,7 +36,7 @@ public class RatingServiceImpl implements RatingService {
     public void rateHike(String hikeTitle, RatingByUserDTO ratingByUser) throws HikeNotFoundException, UserNotFoundException {
         Hike hike = hikeRepository.findByTitle(hikeTitle).orElse(null);
         if (hike == null) throw new HikeNotFoundException("Hike with title %s not found!", hikeTitle);
-        User user = Util.getCurrentUser();
+        User user = userRepository.findByGoogleId(Util.getCurrentUserGoogleId()).orElse(null);
         if (user == null) throw new UserNotFoundException(Messages.USER_NOT_FOUND);
         Rating rating = ratingRepository.findByUserIdAndHikeId(user.getId(), hike.getId()).orElse(null);
         ratingRepository.save(calculateRating(ratingByUser, hike, user, rating));
@@ -44,7 +46,7 @@ public class RatingServiceImpl implements RatingService {
     public void unrateHike(String hikeTitle) throws UserNotFoundException, HikeNotFoundException, RatingNotFoundException {
         Hike hike = hikeRepository.findByTitle(hikeTitle).orElse(null);
         if (hike == null) throw new HikeNotFoundException("Hike with title %s not found!", hikeTitle);
-        User user = Util.getCurrentUser();
+        User user = userRepository.findByGoogleId(Util.getCurrentUserGoogleId()).orElse(null);
         if (user == null) throw new UserNotFoundException(Messages.USER_NOT_FOUND);
         Rating rating = ratingRepository.findByUserIdAndHikeId(user.getId(), hike.getId()).orElse(null);
         if (rating == null) throw new RatingNotFoundException();
@@ -75,7 +77,7 @@ public class RatingServiceImpl implements RatingService {
     protected Rating getRatingByUserForHike(String hikeTitle) throws HikeNotFoundException, UserNotFoundException {
         Hike hike = hikeRepository.findByTitle(hikeTitle).orElse(null);
         if (hike == null) throw new HikeNotFoundException("Hike with title %s not found!", hikeTitle);
-        User user = Util.getCurrentUser();
+        User user = userRepository.findByGoogleId(Util.getCurrentUserGoogleId()).orElse(null);
         if (user == null) throw new UserNotFoundException(Messages.USER_NOT_FOUND);
         return ratingRepository.findByUserIdAndHikeId(user.getId(), hike.getId()).orElse(null);
     }

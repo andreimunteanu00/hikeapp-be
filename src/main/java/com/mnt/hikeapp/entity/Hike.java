@@ -32,6 +32,9 @@ public class Hike implements Serializable {
     @Column(name ="NUMBER_RATINGS")
     private Long numberRatings;
 
+    @Column(name = "DISTANCE")
+    private Double distance;
+
     @OneToOne
     private Picture mainPicture;
 
