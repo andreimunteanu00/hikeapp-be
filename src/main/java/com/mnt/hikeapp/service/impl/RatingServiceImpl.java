@@ -35,7 +35,7 @@ public class RatingServiceImpl implements RatingService {
     @Transactional
     public void rateHike(String hikeTitle, RatingByUserDTO ratingByUser) throws HikeNotFoundException, UserNotFoundException {
         Hike hike = hikeRepository.findByTitle(hikeTitle).orElse(null);
-        if (hike == null) throw new HikeNotFoundException("Hike with title %s not found!", hikeTitle);
+        if (hike == null) throw new HikeNotFoundException(Messages.HIKE_NOT_FOUND);
         User user = userRepository.findByGoogleId(Util.getCurrentUserGoogleId()).orElse(null);
         if (user == null) throw new UserNotFoundException(Messages.USER_NOT_FOUND);
         Rating rating = ratingRepository.findByUserIdAndHikeId(user.getId(), hike.getId()).orElse(null);
@@ -45,7 +45,7 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public void unrateHike(String hikeTitle) throws UserNotFoundException, HikeNotFoundException, RatingNotFoundException {
         Hike hike = hikeRepository.findByTitle(hikeTitle).orElse(null);
-        if (hike == null) throw new HikeNotFoundException("Hike with title %s not found!", hikeTitle);
+        if (hike == null) throw new HikeNotFoundException(Messages.HIKE_NOT_FOUND);
         User user = userRepository.findByGoogleId(Util.getCurrentUserGoogleId()).orElse(null);
         if (user == null) throw new UserNotFoundException(Messages.USER_NOT_FOUND);
         Rating rating = ratingRepository.findByUserIdAndHikeId(user.getId(), hike.getId()).orElse(null);

@@ -33,7 +33,7 @@ public class HikeHistoryServiceImpl implements HikeHistoryService {
     public void postHistory(HikeSummary hikeSummary) throws HikeNotFoundException, UserNotFoundException {
         HikeHistory hikeHistory = new HikeHistory();
         Hike hike = hikeRepository.findByTitle(hikeSummary.getHikeTitle()).orElse(null);
-        if (hike == null) throw new HikeNotFoundException("Hike with title %s not found!", hikeSummary.getHikeTitle());
+        if (hike == null) throw new HikeNotFoundException(Messages.HIKE_NOT_FOUND);
         User user = userRepository.findByGoogleId(Util.getCurrentUserGoogleId()).orElse(null);
         if (user == null) throw new UserNotFoundException(Messages.USER_NOT_FOUND);
         double score = Util.calculateHikePoints(hike.getDifficulty(), hike.getDistance(), hikeSummary.getElapsedTime().getSeconds(), hikeSummary.getTemperatureAverage());
@@ -51,7 +51,7 @@ public class HikeHistoryServiceImpl implements HikeHistoryService {
         if (user == null) throw new UserNotFoundException(Messages.USER_NOT_FOUND);
         HikeHistory hikeHistory = hikeHistoryRepository
                 .findFirstByHikeTitleAndUserIdOrderByCreatedDateTimeDesc(hikeTitle, user.getId());
-        if (hikeHistory == null) throw new HikeHistoryNotFoundException("hike history not found!");
+        if (hikeHistory == null) throw new HikeHistoryNotFoundException(Messages.HIKE_HISTORY_NOT_FOUND);
         return hikeHistoryMapper.toHikeShowDTO(hikeHistory);
     }
 }
