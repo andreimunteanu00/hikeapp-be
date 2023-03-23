@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "USER")
@@ -47,5 +48,11 @@ public class User implements Serializable {
     @UpdateTimestamp
     @Column(name = "UPDATE_DATE_TIME")
     private LocalDateTime updateDateTime;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "CHAT_ROOM_USER",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "CHAT_ROOM_ID"))
+    private List<ChatRoom> chatRoomList;
 
 }

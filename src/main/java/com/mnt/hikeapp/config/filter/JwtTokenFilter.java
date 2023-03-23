@@ -1,11 +1,10 @@
 package com.mnt.hikeapp.config.filter;
 
-import com.mnt.hikeapp.entity.User;
+import com.mnt.hikeapp.dto.mapper.UserMapper;
+import com.mnt.hikeapp.dto.user.UserSecurityDTO;
 import com.mnt.hikeapp.repository.UserRepository;
-import com.mnt.hikeapp.util.Constants;
 import com.mnt.hikeapp.util.JwtTokenUtil;
 import com.mnt.hikeapp.util.Messages;
-import com.mnt.hikeapp.util.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @Component
 @AllArgsConstructor
@@ -27,6 +27,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -37,8 +38,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
         final String token = header.split(" ")[1].trim();
         if (Strings.isEmpty(token)) throw new Error(Messages.TOKEN_NOT_FOUND);
-        User user = userRepository
-                .findByGoogleId(jwtTokenUtil.getGoogleIdForToken(token)).orElse(null);
+        UserSecurityDTO user = userMapper.toUserSecurityDTO(Objects.requireNonNull(userRepository
+                .findByGoogleId(jwtTokenUtil.getGoogleIdForToken(token)).orElse(null)));
         if (user == null) throw new Error(Messages.USERNAME_NOT_FOUND);
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(user, null,null);

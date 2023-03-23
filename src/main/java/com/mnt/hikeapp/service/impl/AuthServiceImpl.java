@@ -10,12 +10,17 @@ import com.mnt.hikeapp.util.exception.UserNotCreated;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Service
 @AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final UserService userService;
+
+    @Override
     public String generateToken(String googleId, String email) throws Exception {
         if (!userService.checkUserExists(googleId)) {
             User user = userService.createFirstTimeLogInUser(googleId, email);
@@ -25,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User getCurrentUser() {
-        return Util.getCurrentUser();
+    public User getCurrentUser() throws SQLException, IOException {
+        return userService.findByGoogleId(Util.getCurrentUserGoogleId());
     }
 }

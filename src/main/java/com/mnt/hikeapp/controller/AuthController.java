@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
@@ -19,7 +22,7 @@ public class AuthController {
     }
 
     @GetMapping("currentUser")
-    public ResponseEntity<User> getCurrentUser() {
+    public ResponseEntity<User> getCurrentUser() throws SQLException, IOException {
         return ResponseEntity.ok(authService.getCurrentUser());
     }
 }

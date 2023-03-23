@@ -1,6 +1,8 @@
 package com.mnt.hikeapp.service.impl;
 
+import com.mnt.hikeapp.dto.mapper.UserMapper;
 import com.mnt.hikeapp.dto.user.UserSetupDTO;
+import com.mnt.hikeapp.dto.user.UserShowDTO;
 import com.mnt.hikeapp.entity.Picture;
 import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.repository.UserRepository;
@@ -8,8 +10,11 @@ import com.mnt.hikeapp.service.UserService;
 import com.mnt.hikeapp.util.Constants;
 import com.mnt.hikeapp.util.Messages;
 import com.mnt.hikeapp.util.Util;
+import com.mnt.hikeapp.util.enums.ChatType;
 import com.mnt.hikeapp.util.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,6 +25,7 @@ import java.nio.file.Path;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     @Transactional
@@ -63,4 +69,19 @@ public class UserServiceImpl implements UserService {
     public Boolean checkFieldDuplicate(String columnName, String value) {
         return userRepository.checkFieldDuplicate(columnName, value) != 0 ? Boolean.TRUE : Boolean.FALSE;
     }
+
+    @Override
+    @Transactional
+    public Page<UserShowDTO> findAllUsersForChat(String chatType, String username, Pageable pageable) {
+        ChatType chatTypeEnum = Util.getChatType(chatType);
+        Page<UserShowDTO> userShowDTOS;
+        assert chatTypeEnum != null;
+        if (chatTypeEnum.name().equalsIgnoreCase(Constants.PRIVATE)) {
+            userShowDTOS = userMapper.toUserShowListPageDTO(userRepository.findByUsernameContainingIgnoreCaseOrderByUsername(username, pageable));
+        } else {
+            userShowDTOS = null;
+        }
+        return userShowDTOS;
+    }
+
 }
