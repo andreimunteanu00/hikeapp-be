@@ -14,4 +14,5 @@ public interface RatingService {
     void unrateHike(String hikeTitle) throws UserNotFoundException, HikeNotFoundException, RatingNotFoundException;
     Page<RatingForHikeDetailDTO> getRatingByHikeTitle(String hikeTitle, Pageable page);
     RatingForHikeDetailDTO getRatingByCurrentUser(String hikeTitle) throws UserNotFoundException, HikeNotFoundException;
+
 }

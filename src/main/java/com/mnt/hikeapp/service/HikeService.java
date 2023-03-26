@@ -9,4 +9,5 @@ public interface HikeService {
 
     Page<HikeShowDTO> getHikeShowList(String title, String sort, Pageable page);
     HikeDetailScreenDTO getHikeDetailScreenByTitle(String hikeTitle);
+
 }

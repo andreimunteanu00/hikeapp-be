@@ -10,7 +10,6 @@ import com.mnt.hikeapp.service.UserService;
 import com.mnt.hikeapp.util.Constants;
 import com.mnt.hikeapp.util.Messages;
 import com.mnt.hikeapp.util.Util;
-import com.mnt.hikeapp.util.enums.ChatType;
 import com.mnt.hikeapp.util.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -60,7 +59,7 @@ public class UserServiceImpl implements UserService {
         }
         userDb.setFirstLogin(userSetupDTO.isFirstLogin());
         userDb.setUsername(userSetupDTO.getUsername());
-        userDb.setProfilePicture(userDb.getProfilePicture());
+        userDb.setProfilePicture(userSetupDTO.getProfilePicture());
         return userRepository.save(userDb);
     }
 
@@ -72,16 +71,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public Page<UserShowDTO> findAllUsersForChat(String chatType, String username, Pageable pageable) {
-        ChatType chatTypeEnum = Util.getChatType(chatType);
-        Page<UserShowDTO> userShowDTOS;
-        assert chatTypeEnum != null;
-        if (chatTypeEnum.name().equalsIgnoreCase(Constants.PRIVATE)) {
-            userShowDTOS = userMapper.toUserShowListPageDTO(userRepository.findByUsernameContainingIgnoreCaseOrderByUsername(username, pageable));
-        } else {
-            userShowDTOS = null;
-        }
-        return userShowDTOS;
+    public Page<UserShowDTO> findAllUsersForChat(String username, Pageable pageable) {
+        return userMapper.toUserShowListPageDTO(userRepository.findByUsernameContainingIgnoreCaseOrderByUsername(username, pageable));
     }
 
 }

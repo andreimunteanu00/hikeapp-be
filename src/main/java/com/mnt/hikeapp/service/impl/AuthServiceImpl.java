@@ -1,5 +1,7 @@
 package com.mnt.hikeapp.service.impl;
 
+import com.mnt.hikeapp.dto.mapper.UserMapper;
+import com.mnt.hikeapp.dto.user.UserAfterLoginDTO;
 import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.service.AuthService;
 import com.mnt.hikeapp.service.UserService;
@@ -19,6 +21,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @Override
     public String generateToken(String googleId, String email) throws Exception {
@@ -30,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User getCurrentUser() throws SQLException, IOException {
-        return userService.findByGoogleId(Util.getCurrentUserGoogleId());
+    public UserAfterLoginDTO getCurrentUserAfterFirstLogin() throws SQLException, IOException {
+        return userMapper.toUserAfterLoginDTO(userService.findByGoogleId(Util.getCurrentUserGoogleId()));
     }
 }

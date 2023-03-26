@@ -1,5 +1,6 @@
 package com.mnt.hikeapp.dto.mapper;
 
+import com.mnt.hikeapp.dto.user.UserAfterLoginDTO;
 import com.mnt.hikeapp.dto.user.UserSecurityDTO;
 import com.mnt.hikeapp.dto.user.UserShowDTO;
 import com.mnt.hikeapp.entity.User;
@@ -26,9 +27,24 @@ public class UserMapper {
         return new PageImpl<>(aux);
     }
 
+    public List<UserShowDTO> toUserShowListDTO(List<User> userList) {
+        return userList.stream().map(this::toUserShowDTO).collect(Collectors.toList());
+    }
+
     public UserSecurityDTO toUserSecurityDTO(User user) {
         return new UserSecurityDTO(
                 user.getGoogleId()
+        );
+    }
+
+    public UserAfterLoginDTO toUserAfterLoginDTO(User user) {
+        return new UserAfterLoginDTO(
+          user.getUsername(),
+          user.getGoogleId(),
+          user.getEmail(),
+          user.getProfilePicture(),
+          user.isFirstLogin(),
+          user.isActive()
         );
     }
 }

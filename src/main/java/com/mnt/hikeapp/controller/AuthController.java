@@ -1,6 +1,6 @@
 package com.mnt.hikeapp.controller;
 
-import com.mnt.hikeapp.entity.User;
+import com.mnt.hikeapp.dto.user.UserAfterLoginDTO;
 import com.mnt.hikeapp.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +21,8 @@ public class AuthController {
         return ResponseEntity.ok(authService.generateToken(googleId, email));
     }
 
-    @GetMapping("currentUser")
-    public ResponseEntity<User> getCurrentUser() throws SQLException, IOException {
-        return ResponseEntity.ok(authService.getCurrentUser());
+    @GetMapping("current-user-after-first-login")
+    public ResponseEntity<UserAfterLoginDTO> getCurrentUserAfterFirstLogin() throws SQLException, IOException {
+        return ResponseEntity.ok(authService.getCurrentUserAfterFirstLogin());
     }
 }

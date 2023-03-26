@@ -30,12 +30,11 @@ public class UserController {
         return ResponseEntity.ok(userService.checkFieldDuplicate(columnName, username));
     }
 
-    @GetMapping("/all/{chatType}")
-    private ResponseEntity<Page<UserShowDTO>> getAllUsersForNewChat(@PathVariable String chatType,
-                                                                    @RequestParam(name = "username", defaultValue = "") String username,
+    @GetMapping("/all")
+    private ResponseEntity<Page<UserShowDTO>> getAllUsersForNewChat(@RequestParam(name = "username", defaultValue = "") String username,
                                                                     @RequestParam(name = "page", defaultValue = "0") int page,
                                                                     @RequestParam(name = "size", defaultValue = "10") int size) {
-        return ResponseEntity.ok(userService.findAllUsersForChat(chatType, username, PageRequest.of(page, size)));
+        return ResponseEntity.ok(userService.findAllUsersForChat(username, PageRequest.of(page, size)));
     }
 
     @PutMapping("update")

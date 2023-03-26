@@ -16,5 +16,6 @@ public interface UserService {
     User findByGoogleId(String googleId) throws SQLException, IOException;
     User update(UserSetupDTO user) throws Exception;
     Boolean checkFieldDuplicate(String field, String value);
-    Page<UserShowDTO> findAllUsersForChat(String chatType, String username, Pageable pageable);
+    Page<UserShowDTO> findAllUsersForChat(String username, Pageable pageable);
+
 }

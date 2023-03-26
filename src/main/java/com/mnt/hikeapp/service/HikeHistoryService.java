@@ -7,6 +7,8 @@ import com.mnt.hikeapp.util.exception.UserNotFoundException;
 import com.mnt.hikeapp.util.model.HikeSummary;
 
 public interface HikeHistoryService {
+
     void postHistory(HikeSummary hikeSummary) throws HikeNotFoundException, UserNotFoundException;
     HikeHistoryFinishDTO getFinishHistoryByTitle(String hikeTitle) throws UserNotFoundException, HikeHistoryNotFoundException;
+
 }

@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByGoogleId(String googleId);
 
+    Optional<User> findByUsername(String username);
+
     @Query(nativeQuery = true, value = "SELECT EXISTS(SELECT 1 " +
             "              FROM user " +
             "              WHERE :value in (SELECT CASE :columnName " +

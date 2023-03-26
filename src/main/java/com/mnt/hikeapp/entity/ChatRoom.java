@@ -25,13 +25,13 @@ public class ChatRoom implements Serializable {
     @Column(name = "NAME")
     private String name;
 
-    @OneToOne
-    private Picture photo;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Picture publicChatPhoto;
 
     @OneToMany
     private List<ChatMessage> chatMessages;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "CHAT_ROOM_USER",
             joinColumns = @JoinColumn(name = "CHAT_ROOM_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID"))
