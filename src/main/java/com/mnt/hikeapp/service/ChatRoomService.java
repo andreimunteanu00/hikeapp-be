@@ -10,6 +10,6 @@ public interface ChatRoomService {
 
     ChatRoomPrivateDTO createOrGetPrivateChatRoom(List<String> googleIds);
     List<ChatRoomDTO> getCurrentUserChatRooms();
-    ChatRoomPublicDTO createOrGetPublicChatRoom(ChatRoomPublicDTO chatRoomPublicDTO);
+    ChatRoomPublicDTO createOrGetPublicChatRoom(ChatRoomPublicDTO chatRoomPublicDTO) throws Exception;
 
 }

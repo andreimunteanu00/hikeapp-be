@@ -10,12 +10,14 @@ import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.repository.ChatRoomRepository;
 import com.mnt.hikeapp.repository.UserRepository;
 import com.mnt.hikeapp.service.ChatRoomService;
+import com.mnt.hikeapp.util.Constants;
 import com.mnt.hikeapp.util.Util;
 import com.mnt.hikeapp.util.enums.ChatType;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,10 +39,16 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         if (chatRoom != null) {
             chatRoomPrivateDTO = chatRoomMapper.toChatRoomPrivateDTO(chatRoom);
         }
-        return Objects.requireNonNullElseGet(chatRoomPrivateDTO, () -> chatRoomMapper.toChatRoomPrivateDTO(createChatRoom(googleIds, null, null)));
+        return Objects.requireNonNullElseGet(chatRoomPrivateDTO, () -> {
+            try {
+                return chatRoomMapper.toChatRoomPrivateDTO(createChatRoom(googleIds, null, null));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
-    private ChatRoom createChatRoom(List<String> googleIds, String groupName, Picture groupPicture) {
+    private ChatRoom createChatRoom(List<String> googleIds, String groupName, Picture groupPicture) throws Exception {
         List<User> users = new ArrayList<>();
         googleIds.forEach(id -> users.add(userRepository.findByGoogleId(id).orElse(null)));
         ChatRoom chatRoom = new ChatRoom();
@@ -48,7 +56,11 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         if (googleIds.size() > 2) {
             chatRoom.setChatType(ChatType.PUBLIC);
             chatRoom.setName(groupName);
-            chatRoom.setPublicChatPhoto(groupPicture);
+            if (groupPicture != null && groupPicture.getBase64() != null) {
+                chatRoom.setPublicChatPhoto(groupPicture);
+            } else {
+                chatRoom.setPublicChatPhoto(new Picture(Util.fileToBase64(Path.of(Constants.PATH_DEFAULT_AVATAR))));
+            }
         } else {
             chatRoom.setChatType(ChatType.PRIVATE);
         }
@@ -64,7 +76,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     @Override
     @Transactional
-    public ChatRoomPublicDTO createOrGetPublicChatRoom(ChatRoomPublicDTO chatRoomPublicDTO) {
+    public ChatRoomPublicDTO createOrGetPublicChatRoom(ChatRoomPublicDTO chatRoomPublicDTO) throws Exception {
         ChatRoom chatRoom = createChatRoom(chatRoomPublicDTO.getGoogleIds(), chatRoomPublicDTO.getName(), chatRoomPublicDTO.getPublicChatPhoto());
         return chatRoomMapper.toChatRoomPublicDTO(chatRoom);
     }

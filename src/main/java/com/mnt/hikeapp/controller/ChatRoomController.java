@@ -28,7 +28,7 @@ public class ChatRoomController {
     }
 
     @PostMapping("/create-or-get/public")
-    public ResponseEntity<ChatRoomPublicDTO> createOrGetPublicChatRoom(@RequestBody ChatRoomPublicDTO chatRoomPublicDTO) {
+    public ResponseEntity<ChatRoomPublicDTO> createOrGetPublicChatRoom(@RequestBody ChatRoomPublicDTO chatRoomPublicDTO) throws Exception {
         return ResponseEntity.ok(chatRoomService.createOrGetPublicChatRoom(chatRoomPublicDTO));
     }
 }
