@@ -8,6 +8,7 @@ import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.util.Util;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class ChatRoomMapper {
 
     private final UserMapper userMapper;
+    private final ChatMessageMapper chatMessageMapper;
 
     public ChatRoomPrivateDTO toChatRoomPrivateDTO(ChatRoom chatRoom) {
         User user = null;
@@ -48,7 +50,8 @@ public class ChatRoomMapper {
                     null,
                     chatRoom.getName(),
                     chatRoom.getPublicChatPhoto(),
-                    userMapper.toUserShowListDTO(chatRoom.getUserList())
+                    userMapper.toUserShowListDTO(chatRoom.getUserList()),
+                    !CollectionUtils.isEmpty(chatRoom.getChatMessages()) ? chatMessageMapper.toChatMessageSenderDTO(chatRoom.getChatMessages().get(chatRoom.getChatMessages().size() - 1)) : null
             );
         } else {
             User user = null;
@@ -63,7 +66,8 @@ public class ChatRoomMapper {
                     userMapper.toUserShowDTO(user),
                     null,
                     null,
-                    null
+                    null,
+                    !CollectionUtils.isEmpty(chatRoom.getChatMessages()) ? chatMessageMapper.toChatMessageSenderDTO(chatRoom.getChatMessages().get(chatRoom.getChatMessages().size() - 1)) : null
             );
         }
 

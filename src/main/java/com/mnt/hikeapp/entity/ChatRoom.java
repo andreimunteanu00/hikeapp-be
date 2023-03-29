@@ -28,7 +28,7 @@ public class ChatRoom implements Serializable {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Picture publicChatPhoto;
 
-    @OneToMany
+    @OneToMany(mappedBy = "chatRoom")
     private List<ChatMessage> chatMessages;
 
     @ManyToMany(fetch = FetchType.EAGER)
