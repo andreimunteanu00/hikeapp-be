@@ -29,7 +29,7 @@ public class ChatMessageController {
         messagingTemplate.convertAndSend("/topic/room/" + chatMessage.getChatRoomId(), chatMessage);
     }
 
-    @GetMapping("/api/chat-message/private/{roomId}")
+    @GetMapping("/api/chat-message/all/{roomId}")
     public ResponseEntity<Page<ChatMessageSenderDTO>> getAllMessagesForPrivateChat(@PathVariable Long roomId,
                                                                                    @RequestParam(name = "page", defaultValue = "0") int page) {
         return ResponseEntity.ok(chatMessageService.getAllMessagesForPrivateChat(roomId, PageRequest.of(page, 20)));

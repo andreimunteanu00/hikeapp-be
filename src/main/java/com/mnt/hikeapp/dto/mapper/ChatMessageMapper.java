@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,7 @@ public class ChatMessageMapper {
 
     public Page<ChatMessageSenderDTO> toChatMessageSenderListPageDTO(Page<ChatMessage> userList) {
         List<ChatMessageSenderDTO> aux = userList.stream().map(this::toChatMessageSenderDTO).collect(Collectors.toList());
+        Collections.reverse(aux);
         return new PageImpl<>(aux);
     }
 }

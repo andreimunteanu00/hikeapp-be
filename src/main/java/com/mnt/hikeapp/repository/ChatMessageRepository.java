@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
 
-    Page<ChatMessage> findByChatRoomIdOrderByTimestamp(@Param("chatRoomId") Long chatRoomId, Pageable pageable);
+    Page<ChatMessage> findByChatRoomIdOrderByTimestampDesc(@Param("chatRoomId") Long chatRoomId, Pageable pageable);
 
 }

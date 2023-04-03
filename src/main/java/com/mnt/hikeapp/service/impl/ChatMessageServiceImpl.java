@@ -47,6 +47,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Override
     @Transactional
     public Page<ChatMessageSenderDTO> getAllMessagesForPrivateChat(Long roomId, PageRequest page) {
-        return chatMessageMapper.toChatMessageSenderListPageDTO(chatMessageRepository.findByChatRoomIdOrderByTimestamp(roomId, page));
+        return chatMessageMapper.toChatMessageSenderListPageDTO(chatMessageRepository.findByChatRoomIdOrderByTimestampDesc(roomId, page));
     }
 }
