@@ -11,8 +11,11 @@ import com.mnt.hikeapp.repository.ChatRoomRepository;
 import com.mnt.hikeapp.repository.UserRepository;
 import com.mnt.hikeapp.service.ChatRoomService;
 import com.mnt.hikeapp.util.Constants;
+import com.mnt.hikeapp.util.Messages;
 import com.mnt.hikeapp.util.Util;
 import com.mnt.hikeapp.util.enums.ChatType;
+import com.mnt.hikeapp.util.exception.ChatRoomNotFoundException;
+import com.mnt.hikeapp.util.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -79,5 +82,28 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     public ChatRoomPublicDTO createOrGetPublicChatRoom(ChatRoomPublicDTO chatRoomPublicDTO) throws Exception {
         ChatRoom chatRoom = createChatRoom(chatRoomPublicDTO.getGoogleIds(), chatRoomPublicDTO.getName(), chatRoomPublicDTO.getPublicChatPhoto());
         return chatRoomMapper.toChatRoomPublicDTO(chatRoom);
+    }
+
+    @Override
+    public void leaveChat(Long chatRoomId) throws UserNotFoundException, ChatRoomNotFoundException {
+        User user = userRepository.findByGoogleId(Util.getCurrentUserGoogleId()).orElse(null);
+        if (user == null) throw new UserNotFoundException(Messages.USERNAME_NOT_FOUND);
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElse(null);
+        if (chatRoom == null) throw new ChatRoomNotFoundException(Messages.CHAT_ROOM_NOT_FOUND);
+        chatRoom.getUserList().removeIf(userInList -> userInList.getGoogleId().equals(user.getGoogleId()));
+        chatRoomRepository.save(chatRoom);
+    }
+
+    @Override
+    public ChatRoomPublicDTO editPublicChatRoom(ChatRoomPublicDTO chatRoomPublicDTO) throws ChatRoomNotFoundException {
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomPublicDTO.getId()).orElse(null);
+        if (chatRoom == null) throw new ChatRoomNotFoundException(Messages.CHAT_ROOM_NOT_FOUND);
+        chatRoom.setName(chatRoomPublicDTO.getName());
+        if (chatRoomPublicDTO.getPublicChatPhoto() != null && chatRoomPublicDTO.getPublicChatPhoto().getBase64() != null
+        && !Objects.equals(chatRoomPublicDTO.getPublicChatPhoto().getBase64(), chatRoom.getPublicChatPhoto().getBase64())) {
+            chatRoom.setPublicChatPhoto(chatRoomPublicDTO.getPublicChatPhoto());
+        }
+        chatRoomRepository.save(chatRoom);
+        return chatRoomPublicDTO;
     }
 }
