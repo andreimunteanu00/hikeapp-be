@@ -15,5 +15,8 @@ public interface ChatRoomService {
     ChatRoomPublicDTO createOrGetPublicChatRoom(ChatRoomPublicDTO chatRoomPublicDTO) throws Exception;
     void leaveChat(Long chatRoomId) throws UserNotFoundException, ChatRoomNotFoundException;
     ChatRoomPublicDTO editPublicChatRoom(ChatRoomPublicDTO chatRoomPublicDTO) throws ChatRoomNotFoundException;
+    void removeMember(String googleId, Long chatRoomId) throws ChatRoomNotFoundException, UserNotFoundException;
+    void addMembers(ChatRoomPublicDTO chatRoomPublicDTO) throws ChatRoomNotFoundException, UserNotFoundException;
+    void giveAdmin(String googleId, Long chatRoomId) throws ChatRoomNotFoundException, UserNotFoundException;
 
 }

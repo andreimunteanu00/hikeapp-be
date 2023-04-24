@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -29,6 +30,10 @@ public class UserMapper {
 
     public List<UserShowDTO> toUserShowListDTO(List<User> userList) {
         return userList.stream().map(this::toUserShowDTO).collect(Collectors.toList());
+    }
+
+    public Set<UserShowDTO> toUserShowListDTO(Set<User> userList) {
+        return userList.stream().map(this::toUserShowDTO).collect(Collectors.toSet());
     }
 
     public UserSecurityDTO toUserSecurityDTO(User user) {

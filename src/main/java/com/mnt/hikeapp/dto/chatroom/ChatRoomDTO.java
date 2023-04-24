@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -17,6 +18,7 @@ public class ChatRoomDTO {
     private String name;
     private Picture publicChatPhoto;
     private List<UserShowDTO> userList;
+    private Set<UserShowDTO> adminList;
     private ChatMessageSenderDTO lastMessage;
 
 }

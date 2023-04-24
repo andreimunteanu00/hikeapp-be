@@ -6,6 +6,7 @@ import com.mnt.hikeapp.dto.chatroom.ChatRoomPublicDTO;
 import com.mnt.hikeapp.entity.ChatRoom;
 import com.mnt.hikeapp.entity.User;
 import com.mnt.hikeapp.util.Util;
+import com.mnt.hikeapp.util.enums.ChatType;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -40,17 +41,19 @@ public class ChatRoomMapper {
                 chatRoom.getName(),
                 chatRoom.getPublicChatPhoto(),
                 userMapper.toUserShowListDTO(chatRoom.getUserList()),
+                userMapper.toUserShowListDTO(chatRoom.getAdminList()),
                 null);
     }
 
     public ChatRoomDTO toChatRoomDTO(ChatRoom chatRoom) {
-        if (chatRoom.getUserList().size() > 2) {
+        if (chatRoom.getChatType().equals(ChatType.PUBLIC)) {
             return new ChatRoomDTO(
                     chatRoom.getId(),
                     null,
                     chatRoom.getName(),
                     chatRoom.getPublicChatPhoto(),
                     userMapper.toUserShowListDTO(chatRoom.getUserList()),
+                    userMapper.toUserShowListDTO(chatRoom.getAdminList()),
                     !CollectionUtils.isEmpty(chatRoom.getChatMessages()) ? chatMessageMapper.toChatMessageSenderDTO(chatRoom.getChatMessages().get(chatRoom.getChatMessages().size() - 1)) : null
             );
         } else {
@@ -64,6 +67,7 @@ public class ChatRoomMapper {
             return new ChatRoomDTO(
                     chatRoom.getId(),
                     userMapper.toUserShowDTO(user),
+                    null,
                     null,
                     null,
                     null,

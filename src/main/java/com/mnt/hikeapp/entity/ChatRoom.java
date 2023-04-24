@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -36,6 +37,12 @@ public class ChatRoom implements Serializable {
             joinColumns = @JoinColumn(name = "CHAT_ROOM_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private List<User> userList;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "CHAT_ROOM_ADMIN",
+            joinColumns = @JoinColumn(name = "CHAT_ROOM_ID"),
+            inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+    private Set<User> adminList;
 
     @CreationTimestamp
     @Column(name = "CREATE_DATE_TIME")

@@ -34,6 +34,18 @@ public class ChatRoomController {
         return ResponseEntity.ok(chatRoomService.createOrGetPublicChatRoom(chatRoomPublicDTO));
     }
 
+    @PutMapping("/give-admin/{googleId}/{chatRoomId}")
+    public ResponseEntity<ChatRoomPublicDTO> giveAdmin(@PathVariable String googleId, @PathVariable Long chatRoomId) throws Exception {
+        chatRoomService.giveAdmin(googleId, chatRoomId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/add-members")
+    public ResponseEntity<ChatRoomPublicDTO> addMembers(@RequestBody ChatRoomPublicDTO chatRoomPublicDTO) throws Exception {
+        chatRoomService.addMembers(chatRoomPublicDTO);
+        return ResponseEntity.noContent().build();
+    }
+
     @PutMapping("/edit")
     public ResponseEntity<ChatRoomPublicDTO> editPublicChatRoom(@RequestBody ChatRoomPublicDTO chatRoomPublicDTO) throws Exception {
         return ResponseEntity.ok(chatRoomService.editPublicChatRoom(chatRoomPublicDTO));
@@ -42,6 +54,12 @@ public class ChatRoomController {
     @DeleteMapping("/leave/current-user/{chatRoomId}")
     public ResponseEntity<Void> leaveChat(@PathVariable Long chatRoomId) throws UserNotFoundException, ChatRoomNotFoundException {
         chatRoomService.leaveChat(chatRoomId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/remove-member/{googleId}/{chatRoomId}")
+    public ResponseEntity<Void> removeMember(@PathVariable String googleId, @PathVariable Long chatRoomId) throws UserNotFoundException, ChatRoomNotFoundException {
+        chatRoomService.removeMember(googleId, chatRoomId);
         return ResponseEntity.noContent().build();
     }
 }

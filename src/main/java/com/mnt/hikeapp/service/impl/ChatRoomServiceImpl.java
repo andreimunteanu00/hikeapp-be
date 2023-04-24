@@ -21,9 +21,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -54,11 +53,13 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private ChatRoom createChatRoom(List<String> googleIds, String groupName, Picture groupPicture) throws Exception {
         List<User> users = new ArrayList<>();
         googleIds.forEach(id -> users.add(userRepository.findByGoogleId(id).orElse(null)));
+        User admin = users.stream().filter(user -> user.getGoogleId().equals(Util.getCurrentUserGoogleId())).findFirst().orElse(null);
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.setUserList(users);
         if (googleIds.size() > 2) {
             chatRoom.setChatType(ChatType.PUBLIC);
             chatRoom.setName(groupName);
+            chatRoom.setAdminList(Collections.singleton(admin));
             if (groupPicture != null && groupPicture.getBase64() != null) {
                 chatRoom.setPublicChatPhoto(groupPicture);
             } else {
@@ -105,5 +106,36 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         }
         chatRoomRepository.save(chatRoom);
         return chatRoomPublicDTO;
+    }
+
+    @Override
+    public void removeMember(String googleId, Long chatRoomId) throws ChatRoomNotFoundException, UserNotFoundException {
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElse(null);
+        if (chatRoom == null) throw new ChatRoomNotFoundException(Messages.CHAT_ROOM_NOT_FOUND);
+        User user = userRepository.findByGoogleId(googleId).orElse(null);
+        if (user == null) throw new UserNotFoundException(Messages.USERNAME_NOT_FOUND);
+        chatRoom.getUserList().remove(user);
+        chatRoom.getAdminList().remove(user);
+        chatRoomRepository.save(chatRoom);
+    }
+
+    @Override
+    public void addMembers(ChatRoomPublicDTO chatRoomPublicDTO) throws ChatRoomNotFoundException {
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomPublicDTO.getId()).orElse(null);
+        if (chatRoom == null) throw new ChatRoomNotFoundException(Messages.CHAT_ROOM_NOT_FOUND);
+        List<User> users = new ArrayList<>();
+        chatRoomPublicDTO.getGoogleIds().forEach(id -> users.add(userRepository.findByGoogleId(id).orElse(null)));
+        chatRoom.getUserList().addAll(users);
+        chatRoomRepository.save(chatRoom);
+    }
+
+    @Override
+    public void giveAdmin(String googleId, Long chatRoomId) throws ChatRoomNotFoundException, UserNotFoundException {
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElse(null);
+        if (chatRoom == null) throw new ChatRoomNotFoundException(Messages.CHAT_ROOM_NOT_FOUND);
+        User user = userRepository.findByGoogleId(googleId).orElse(null);
+        if (user == null) throw new UserNotFoundException(Messages.USERNAME_NOT_FOUND);
+        chatRoom.getAdminList().add(user);
+        chatRoomRepository.save(chatRoom);
     }
 }
