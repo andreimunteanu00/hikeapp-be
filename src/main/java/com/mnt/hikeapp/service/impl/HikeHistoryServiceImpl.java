@@ -16,6 +16,8 @@ import com.mnt.hikeapp.util.exception.HikeNotFoundException;
 import com.mnt.hikeapp.util.exception.UserNotFoundException;
 import com.mnt.hikeapp.util.model.HikeSummary;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -53,5 +55,15 @@ public class HikeHistoryServiceImpl implements HikeHistoryService {
                 .findFirstByHikeTitleAndUserIdOrderByCreatedDateTimeDesc(hikeTitle, user.getId());
         if (hikeHistory == null) throw new HikeHistoryNotFoundException(Messages.HIKE_HISTORY_NOT_FOUND);
         return hikeHistoryMapper.toHikeShowDTO(hikeHistory);
+    }
+
+    @Override
+    public Page<HikeHistoryFinishDTO> getAllHikeHistoryForCurrentUser(String title, PageRequest page) throws UserNotFoundException, HikeHistoryNotFoundException {
+        User user = userRepository.findByGoogleId(Util.getCurrentUserGoogleId()).orElse(null);
+        if (user == null) throw new UserNotFoundException(Messages.USER_NOT_FOUND);
+        Page<HikeHistory> hikeHistory = hikeHistoryRepository
+                .findAllByHikeTitleAndUserIdOrderByCreatedDateTimeDesc("%" + title + "%", user.getId(), page);
+        if (hikeHistory == null) throw new HikeHistoryNotFoundException(Messages.HIKE_HISTORY_NOT_FOUND);
+        return hikeHistoryMapper.toHikeShowListPageDTO(hikeHistory);
     }
 }

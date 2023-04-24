@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         user.setFirstLogin(true);
         user.setActive(true);
+        user.setHikePoints(0.0);
         user.setProfilePicture(new Picture(Util.fileToBase64(Path.of(Constants.PATH_DEFAULT_AVATAR))));
         return userRepository.save(user);
     }

@@ -1,5 +1,6 @@
 package com.mnt.hikeapp.dto.hikehistory;
 
+import com.mnt.hikeapp.dto.hike.HikeShowDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class HikeHistoryFinishDTO {
 
     private LocalDateTime createdDateTime;
     private Duration elapsedTime;
-    private String hikeTitle;
     private Double hikePoints;
+    private HikeShowDTO hike;
 
 }
