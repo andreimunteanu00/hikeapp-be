@@ -25,8 +25,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                // TODO enable csrf
-                // TODO read about csrf and cors for mobile + stateless session
                 .csrf().disable().cors().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/{googleId}/{email}").permitAll()
