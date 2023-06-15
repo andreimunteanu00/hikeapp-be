@@ -11,6 +11,7 @@ public class UserAfterLoginDTO {
     private String username;
     private String googleId;
     private String email;
+    private Double hikePoints;
     private Picture profilePicture;
     private Boolean firstLogin;
     private Boolean active;

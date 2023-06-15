@@ -47,6 +47,7 @@ public class UserMapper {
           user.getUsername(),
           user.getGoogleId(),
           user.getEmail(),
+          user.getHikePoints(),
           user.getProfilePicture(),
           user.isFirstLogin(),
           user.isActive()
