@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @PutMapping("update")
-    private ResponseEntity<User> update(@RequestBody UserSetupDTO userSetupDTO) throws Exception {
-        User user = userService.update(userSetupDTO);
+    private ResponseEntity<UserSetupDTO> update(@RequestBody UserSetupDTO userSetupDTO) throws Exception {
+        UserSetupDTO user = userService.update(userSetupDTO);
         return ResponseEntity.ok(user);
     }
 }

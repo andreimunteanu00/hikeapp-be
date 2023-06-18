@@ -2,6 +2,7 @@ package com.mnt.hikeapp.dto.mapper;
 
 import com.mnt.hikeapp.dto.user.UserAfterLoginDTO;
 import com.mnt.hikeapp.dto.user.UserSecurityDTO;
+import com.mnt.hikeapp.dto.user.UserSetupDTO;
 import com.mnt.hikeapp.dto.user.UserShowDTO;
 import com.mnt.hikeapp.entity.User;
 import org.springframework.data.domain.Page;
@@ -51,6 +52,16 @@ public class UserMapper {
           user.getProfilePicture(),
           user.isFirstLogin(),
           user.isActive()
+        );
+    }
+
+    public UserSetupDTO toUserSetupDTO(User user) {
+        return new UserSetupDTO(
+                user.isFirstLogin(),
+                user.getGoogleId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getProfilePicture()
         );
     }
 }

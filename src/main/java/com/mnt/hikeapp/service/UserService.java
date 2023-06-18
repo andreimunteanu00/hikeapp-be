@@ -14,7 +14,7 @@ public interface UserService {
     User createFirstTimeLogInUser(String googleId, String email) throws Exception;
     boolean checkUserExists(String googleId);
     User findByGoogleId(String googleId) throws SQLException, IOException;
-    User update(UserSetupDTO user) throws Exception;
+    UserSetupDTO update(UserSetupDTO user) throws Exception;
     Boolean checkFieldDuplicate(String field, String value);
     Page<UserShowDTO> findAllUsersForChat(String username, Pageable pageable);
 

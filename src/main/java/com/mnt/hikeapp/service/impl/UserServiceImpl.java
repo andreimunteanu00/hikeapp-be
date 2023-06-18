@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User update(UserSetupDTO userSetupDTO) throws Exception {
+    public UserSetupDTO update(UserSetupDTO userSetupDTO) throws Exception {
         User userDb = userRepository.findByGoogleId(userSetupDTO.getGoogleId()).orElse(null);
         if (userDb == null) {
             throw new UserNotFoundException(Messages.USER_NOT_FOUND);
@@ -61,7 +61,8 @@ public class UserServiceImpl implements UserService {
         userDb.setFirstLogin(userSetupDTO.isFirstLogin());
         userDb.setUsername(userSetupDTO.getUsername());
         userDb.setProfilePicture(userSetupDTO.getProfilePicture());
-        return userRepository.save(userDb);
+        userDb = userRepository.save(userDb);
+        return userMapper.toUserSetupDTO(userDb);
     }
 
     @Override
